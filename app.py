@@ -5,6 +5,10 @@ import numpy as np
 import altair as alt
 import matplotlib.pyplot as plt
 
+def speed_loss_due_to_fouling(roughness, vessel_speed):
+    loss_percent = roughness * 50
+    return vessel_speed * (1 - loss_percent / 100)
+
 # Import helper modules
 from propulsion_physics import (
     fuel_curve,
@@ -85,7 +89,9 @@ st.write(f"Power Required (kW): {power_kw:.2f}")
 st.write(f"Speed after Fouling (kn): {speed_loss:.2f}")
 st.write(f"Fuel Consumption (kg/hr): {fuel:.2f}")
 
-# Speed Loss vs Hull Fouling Chart
+# -----------------------------
+# Speed Loss vs Hull Fouling
+# -----------------------------
 roughness_range = np.linspace(0.01, 0.2, 30)
 
 speed_values = [
@@ -97,6 +103,17 @@ speed_df = pd.DataFrame({
     "Effective Speed (kn)": speed_values
 })
 
+# Debug: check if values are valid
+st.write(speed_df.head())
+st.write(speed_df.dtypes)
+
+# Ensure numeric values
+speed_df["Effective Speed (kn)"] = pd.to_numeric(speed_df["Effective Speed (kn)"], errors="coerce")
+
+# Remove any invalid rows
+speed_df = speed_df.dropna()
+
+# Plot chart
 speed_chart = alt.Chart(speed_df).mark_line().encode(
     x="Hull Roughness (mm)",
     y="Effective Speed (kn)"
