@@ -119,7 +119,7 @@ speed_df = speed_df.dropna()
 # Plot chart
 speed_chart = alt.Chart(speed_df).mark_line().encode(
     x="Hull Roughness (mm)",
-    y=alt.Y("Speed After Fouling (kn)", scale=alt.Scale(domain=[10.5, 12.5]
+    y=alt.Y("Speed After Fouling (kn)", scale=alt.Scale(domain=[10.5, 12.5])
 ).properties(
     title="📉 Vessel Speed Loss vs Hull Fouling"
 )
