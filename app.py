@@ -28,7 +28,7 @@ st.title("🚢 Ship Hull Biofouling Prediction & Hull Performance Optimization")
 
 st.write("""
 This app predicts **biofouling severity** using logistic regression,
-and gives **maintenance + safety recommendations**.
+and provides **maintenance and safety recommendations**.
 """)
 
 # -----------------------------
@@ -65,8 +65,11 @@ st.write(f"**Biofouling Severity:** {prediction}")
 # -----------------------------
 # Safety + Maintenance
 # -----------------------------
-st.write(check_operational_safety(speed, roughness, days_since_clean))
-st.write(maintenance_action(prediction))
+safety_message = check_operational_safety(speed, roughness, days_since_clean)
+st.write(safety_message)
+
+maintenance_message = maintenance_action(prediction)
+st.write(maintenance_message)
 
 # -----------------------------
 # Physics Metrics
@@ -92,39 +95,5 @@ fuel_values = [fuel_curve(speed, r) for r in fouling_range]
 
 df_fuel = pd.DataFrame({
     "Hull Roughness (mm)": fouling_range,
-    "Fuel Consumption (kg/hr)": fuel_values
+    "Fuel Consumption (kg/hr
 })
-
-fuel_chart = (
-    alt.Chart(df_fuel)
-    .mark_line()
-    .encode(
-        x="Hull Roughness (mm)",
-        y="Fuel Consumption (kg/hr)"
-    )
-    .properties(width=700, height=350)
-)
-
-st.altair_chart(fuel_chart, use_container_width=True)
-
-
-st.subheader("📉 Speed Loss vs Hull Fouling")
-
-speed_values = [speed_loss_due_to_fouling(r, speed) for r in fouling_range]
-
-df_speed = pd.DataFrame({
-    "Hull Roughness (mm)": fouling_range,
-    "Speed (kn)": speed_values
-})
-
-speed_chart = (
-    alt.Chart(df_speed)
-    .mark_line()
-    .encode(
-        x="Hull Roughness (mm)",
-        y="Speed (kn)"
-    )
-    .properties(width=700, height=350)
-)
-
-st.altair_chart(speed_chart, use_container_width=True)
