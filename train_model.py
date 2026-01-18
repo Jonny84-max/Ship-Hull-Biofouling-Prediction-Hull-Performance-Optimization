@@ -36,7 +36,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 # Pipeline
 pipeline = Pipeline([
     ("scaler", StandardScaler()),
-    ("logreg", LogisticRegression(multi_class="multinomial", solver="lbfgs", max_iter=2000))
+    ("logreg", LogisticRegression(multi_class="multinomial", solver="lbfgs", class_weight="balanced", max_iter=2000))
 ])
 
 # Hyperparameter grid
