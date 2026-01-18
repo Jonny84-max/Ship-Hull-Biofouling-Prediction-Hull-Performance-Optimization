@@ -5,6 +5,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
 import joblib
+import matplotlib.pyplot as plt
 
 # Load dataset
 data = pd.read_csv("biofouling_dataset.csv")
