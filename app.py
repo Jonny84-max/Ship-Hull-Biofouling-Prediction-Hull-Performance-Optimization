@@ -35,7 +35,7 @@ and provides **maintenance and safety recommendations**.
 # -----------------------------
 # Inputs
 # -----------------------------
-speed = st.slider("Vessel Speed (kn)", 5, 25, 12)
+vessel_speed = st.slider("Vessel Speed (kn)", 5, 25, 12)
 idle_days = st.number_input("Idle Days", 0, 60, 10)
 temp = st.slider("Sea Temperature (°C)", 20, 35, 28)
 salinity = st.slider("Salinity (ppt)", 30, 40, 35)
@@ -51,7 +51,7 @@ input_data = pd.DataFrame({
     "sea_temperature": [temp],
     "salinity": [salinity],
     "idle_days": [idle_days],
-    "avg_speed": [speed],
+    "avg_speed": [vessel_speed],
     "days_since_cleaning": [days_since_clean],
     "hull_roughness": [roughness],
     "friction_coeff": [friction],
@@ -77,7 +77,7 @@ st.markdown(
 # -----------------------------
 # Safety + Maintenance
 # -----------------------------
-safety_message = check_operational_safety(speed, roughness, days_since_clean)
+safety_message = check_operational_safety(vessel_speed, roughness, days_since_clean)
 st.write(safety_message)
 
 maintenance_message = maintenance_action(prediction)
@@ -86,15 +86,15 @@ st.write(maintenance_message)
 # -----------------------------
 # Performance Metrics
 # -----------------------------
-res = resistance_increase(roughness, speed)
-power_kw = power_required(res, speed) / 1000
-speed_loss = speed_loss_due_to_fouling(roughness, speed)
+res = resistance_increase(roughness, vessel_speed)
+power_kw = power_required(res, vessel_speed) / 1000
+speed_loss = speed_loss_due_to_fouling(roughness, vessel_speed)
 fuel = fuel_consumption(power_kw)
 
 st.subheader("📈 Hull Performance Metrics")
 st.write(f"Resistance (N): {res:.2f}")
 st.write(f"Power Required (kW): {power_kw:.2f}")
-st.write(f"Speed after Fouling (kn): {speed_loss:.2f}")
+st.write(f"vessel_speed after Fouling (kn): {speed_loss:.2f}")
 st.write(f"Fuel Consumption (kg/hr): {fuel:.2f}")
 
 st.subheader("📊 Fuel Consumption vs Hull Fouling")
@@ -117,7 +117,7 @@ chart = alt.Chart(plot_df).mark_line(point=True).encode(
 
 st.altair_chart(chart, use_container_width=True)
 
-st.subheader("📉 Speed Loss vs Hull Fouling")
+st.subheader("📉 vessel-speed Loss vs Hull Fouling")
 
 speed_values = [
     speed_loss_due_to_fouling(r, vessel_speed)
@@ -131,7 +131,7 @@ speed_df = pd.DataFrame({
 
 speed_chart = alt.Chart(speed_df).mark_line(color="red").encode(
     x="Hull Roughness (mm)",
-    y="Effective Speed (kn)"
+    y="Effective vessel_speed (kn)"
 )
 
 st.altair_chart(speed_chart, use_container_width=True)
@@ -142,7 +142,7 @@ st.altair_chart(speed_chart, use_container_width=True)
 st.subheader("📊 Fuel Consumption vs Hull Fouling")
 
 fouling_range = np.linspace(0.01, 0.2, 50)
-fuel_values = [fuel_curve(speed, r) for r in fouling_range]
+fuel_values = [fuel_curve(vessel_speed, r) for r in fouling_range]
 
 df_fuel = pd.DataFrame({
     "Hull Roughness (mm)": fouling_range,
