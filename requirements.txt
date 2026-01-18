@@ -1,6 +1,6 @@
 streamlit==1.22.0
-pandas==2.3.3
-numpy==1.26.4
+altair==4.2.2      # any 4.x or 5.x, but 4.2.2 is known to work in multiple reports
+numpy==1.26.4      # >=1.23,<3 is fine
+pandas==2.2.3      # example within >=1.4,<3 shown in sources
 scikit-learn==1.2.2
 joblib==1.3.2
-altair==3.2.0  # or any compatible version below 5
