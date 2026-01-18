@@ -1,13 +1,9 @@
-"""
-Maintenance decision rules based on fouling severity
-"""
-
-def maintenance_action(fouling_class):
-    if fouling_class == 0:
-        return "No maintenance required"
-    elif fouling_class == 1:
-        return "Schedule inspection and partial cleaning"
-    elif fouling_class == 2:
-        return "Immediate hull cleaning recommended"
+def maintenance_action(prediction):
+    if prediction == 0:
+        return "Maintenance Action: No immediate action needed. Continue monitoring."
+    elif prediction == 1:
+        return "Maintenance Action: Plan hull cleaning soon. Reduce idle time."
+    elif prediction == 2:
+        return "Maintenance Action: Immediate hull cleaning required! Check antifouling paint and inspect hull."
     else:
-        return "Invalid fouling class"
+        return "Maintenance Action: Unknown severity."
