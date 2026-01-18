@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 import numpy as np
-import altair as alt    # for plotting
+import altair as alt
 
 # Import your helper modules
 from propulsion_physics import (
