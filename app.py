@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 import numpy as np
-import altair as alt
+import altair as alt    # for plotting
 
 # Import your helper modules
 from propulsion_physics import (
@@ -60,7 +60,18 @@ input_data = pd.DataFrame({
 prediction = model.predict(input_data)[0]
 
 st.subheader("📌 Prediction Result")
-st.write(f"**Biofouling Severity:** {prediction}")
+severity_map = {
+    0: ("🟢 LOW", "green"),
+    1: ("🟠 MODERATE", "orange"),
+    2: ("🔴 SEVERE", "red")
+}
+
+label, color = severity_map[prediction]
+
+st.markdown(
+    f"<h3 style='color:{color}'>Biofouling Severity: {label}</h3>",
+    unsafe_allow_html=True
+)
 
 # -----------------------------
 # Safety + Maintenance
@@ -72,7 +83,7 @@ maintenance_message = maintenance_action(prediction)
 st.write(maintenance_message)
 
 # -----------------------------
-# Physics Metrics
+# Performance Metrics
 # -----------------------------
 res = resistance_increase(roughness, speed)
 power_kw = power_required(res, speed) / 1000
@@ -84,6 +95,45 @@ st.write(f"Resistance (N): {res:.2f}")
 st.write(f"Power Required (kW): {power_kw:.2f}")
 st.write(f"Speed after Fouling (kn): {speed_loss:.2f}")
 st.write(f"Fuel Consumption (kg/hr): {fuel:.2f}")
+
+st.subheader("📊 Fuel Consumption vs Hull Fouling")
+
+roughness_range = np.linspace(0.01, 0.2, 30)
+
+fuel_values = [
+    fuel_curve(vessel_speed, r) for r in roughness_range
+]
+
+plot_df = pd.DataFrame({
+    "Hull Roughness (mm)": roughness_range,
+    "Fuel Consumption (kg/hr)": fuel_values
+})
+
+chart = alt.Chart(plot_df).mark_line(point=True).encode(
+    x="Hull Roughness (mm)",
+    y="Fuel Consumption (kg/hr)"
+)
+
+st.altair_chart(chart, use_container_width=True)
+
+st.subheader("📉 Speed Loss vs Hull Fouling")
+
+speed_values = [
+    speed_loss_due_to_fouling(r, vessel_speed)
+    for r in roughness_range
+]
+
+speed_df = pd.DataFrame({
+    "Hull Roughness (mm)": roughness_range,
+    "Effective Speed (kn)": speed_values
+})
+
+speed_chart = alt.Chart(speed_df).mark_line(color="red").encode(
+    x="Hull Roughness (mm)",
+    y="Effective Speed (kn)"
+)
+
+st.altair_chart(speed_chart, use_container_width=True)
 
 # -----------------------------
 # Charts (Altair)
