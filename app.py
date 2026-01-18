@@ -3,6 +3,7 @@ import pandas as pd
 import joblib
 import numpy as np
 import altair as alt
+import matplotlib.pyplot as plt
 
 # Import your helper modules
 from propulsion_physics import (
