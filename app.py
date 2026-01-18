@@ -7,7 +7,10 @@ import matplotlib.pyplot as plt
 
 def speed_loss_due_to_fouling(roughness, vessel_speed):
     loss_percent = roughness * 50
-    return vessel_speed * (1 - loss_percent / 100)
+    # Prevent negative speed
+    if loss_percent >= 100:
+        loss_percent = 99
+    return vessel_speed_kn * (1 - loss_percent / 100)
 
 # Import helper modules
 from propulsion_physics import (
@@ -116,14 +119,30 @@ speed_df["Effective Speed (kn)"] = pd.to_numeric(speed_df["Effective Speed (kn)"
 # Remove any invalid rows
 speed_df = speed_df.dropna()
 
+st.write(speed_df.head())
+st.write(speed_df.dtypes)
+st.write(speed_df.isnull().sum())
+
 # Plot chart
+
+# -----------------------------
+# Speed loss vs Hull Fouling
+# -----------------------------
+roughness_range = np.linspace(0.01, 0.2, 30)
+speed_values = [
+    speed_loss_due_to_fouling(r, vessel_speed) for r in roughness_range
+]
+speed_df = pd.DataFrame({
+    "Hull Roughness (mm)": roughness_range,
+    "Speed After Fouling (kn)": speed_values
+})
+st.write(speed_df.head())  # <--- debug check
 speed_chart = alt.Chart(speed_df).mark_line().encode(
-    x="Hull Roughness (mm)",
-    y=alt.Y("Speed After Fouling (kn)", scale=alt.Scale(domain=[10.5, 12.5]))
+    x=alt.X("Hull Roughness (mm)", type="quantitative"),
+    y=alt.Y("Speed After Fouling (kn)", type="quantitative")
 ).properties(
     title="📉 Vessel Speed Loss vs Hull Fouling"
 )
-
 st.altair_chart(speed_chart, use_container_width=True)
 
 # Fuel Consumption vs Hull Fouling Chart
