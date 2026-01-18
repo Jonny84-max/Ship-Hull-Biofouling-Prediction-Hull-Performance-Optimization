@@ -95,5 +95,5 @@ fuel_values = [fuel_curve(speed, r) for r in fouling_range]
 
 df_fuel = pd.DataFrame({
     "Hull Roughness (mm)": fouling_range,
-    "Fuel Consumption (kg/hr)"
+    "Fuel Consumption (kg/hr)": fuel_consumption
 })
