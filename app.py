@@ -56,6 +56,9 @@ input_data = pd.DataFrame({
 
 prediction = model.predict(input_data)[0]
 
+probs = model.predict_proba(input_data)[0]
+st.write("Prediction Probabilities:", probs)
+
 st.subheader("📌 Prediction Result")
 severity_map = {
     0: ("🟢 LOW", "green"),
@@ -116,7 +119,9 @@ speed_df = speed_df.dropna()
 # Plot chart
 speed_chart = alt.Chart(speed_df).mark_line().encode(
     x="Hull Roughness (mm)",
-    y="Effective Speed (kn)"
+    y=alt.Y("Speed After Fouling (kn)", scale=alt.Scale(domain=[10.5, 12.5]))
+)
+
 ).properties(
     title="📉 Vessel Speed Loss vs Hull Fouling"
 )
@@ -134,7 +139,7 @@ df_fuel = pd.DataFrame({
 
 fuel_chart = alt.Chart(df_fuel).mark_line().encode(
     x="Hull Roughness (mm)",
-    y="Fuel Consumption (kg/hr)"
+    y=alt.Y("Fuel Consumption (kg/hr)", scale=alt.Scale(domain=[0, 0.5]))
 ).properties(
     title="📊 Fuel Consumption vs Hull Fouling"
 )
