@@ -1,0 +1,2 @@
+# A-Machine-Learning-Based-Biofouling-Prediction-System-for-Hull-Performance-Optimization
+Biofouling on ship hulls increases drag, fuel consumption, and maintenance costs, yet early detection is difficult using traditional inspection methods. This project uses machine learning and propulsion physics to predict fouling severity and recommend timely maintenance, improving hull performance and reducing operational costs.
