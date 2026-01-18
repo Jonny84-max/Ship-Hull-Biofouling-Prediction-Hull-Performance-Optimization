@@ -2,7 +2,8 @@ def resistance_increase(roughness, speed_kn):
     # Simple resistance formula (example)
     return (1 + roughness * 10) * (speed_kn ** 2)
 
-def power_required(resistance, speed_kn):    speed_m_s = speed_kn * 0.51444
+def power_required(resistance, speed_kn):    
+    speed_m_s = speed_kn * 0.51444
     return resistance * speed_m_s
 
 def speed_loss_due_to_fouling(roughness, speed_kn):
