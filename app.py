@@ -5,7 +5,14 @@ import numpy as np
 import altair as alt
 
 # Import your helper modules
-from propulsion_physics import (fuel_curve,resistance_increase,power_required,speed_loss_due_to_fouling,fuel_consumption)
+from propulsion_physics import (
+    fuel_curve,
+    resistance_increase,
+    power_required,
+    speed_loss_due_to_fouling,
+    fuel_consumption
+)
+
 from safety_rules import check_operational_safety
 from maintenance_schedule import maintenance_action
 
