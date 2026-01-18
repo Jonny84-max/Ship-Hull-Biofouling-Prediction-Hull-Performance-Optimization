@@ -1,15 +1,19 @@
-"""
-Rule-based operational safety checks
-"""
+def check_operational_safety(speed_kn, roughness, days_since_cleaning):
+    warnings = []
 
-def check_operational_safety(speed_kn, hull_roughness, days_since_cleaning):
-    if hull_roughness > 0.08:
-        return "UNSAFE: Excessive hull roughness"
+    # Rule 1: Speed limit
+    if speed_kn > 22:
+        warnings.append("WARNING: Speed too high for safety. Reduce speed.")
 
-    if speed_kn > 18 and hull_roughness > 0.06:
-        return "WARNING: High speed with fouled hull"
+    # Rule 2: Roughness limit
+    if roughness > 0.15:
+        warnings.append("WARNING: Hull roughness is too high. Immediate cleaning recommended.")
 
-    if days_since_cleaning > 365:
-        return "WARNING: Hull cleaning overdue"
+    # Rule 3: Cleaning limit
+    if days_since_cleaning > 120:
+        warnings.append("WARNING: Hull overdue for cleaning. Schedule maintenance.")
 
-    return "SAFE: Operating within limits"
+    if len(warnings) == 0:
+        return "SAFE: Operating within limits."
+    else:
+        return " ".join(warnings)
