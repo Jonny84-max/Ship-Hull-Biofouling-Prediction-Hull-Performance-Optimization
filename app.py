@@ -18,6 +18,7 @@ from propulsion_physics import (
 from safety_rules import check_operational_safety
 from maintenance_schedule import maintenance_action
 from hull3d import hull_3d_figure
+from hull3d_fouled import hull_fouled_figure
 
 # Load the model
 model = joblib.load("biofouling_model.pkl")
@@ -139,3 +140,8 @@ st.altair_chart(fuel_chart, use_container_width=True)
 st.subheader("🧭 3D Ship Hull Visualization")
 # Display the 3D plotly figure from hull3d.py
 st.plotly_chart(hull_3d_figure(), use_container_width=True)
+
+st.subheader("🛳️ Fouled Hull Visualization")
+t = st.slider("Fouling level (0 = clean, 1 = heavy)", 0.0, 1.0, 0.7)
+fig = hull_fouled_figure(t=t)
+st.plotly_chart(fig, use_container_width=True)
