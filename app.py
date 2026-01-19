@@ -4,7 +4,7 @@ import joblib
 import numpy as np
 import altair as alt
 import matplotlib.pyplot as plt
-import plotly
+import plotly.graph_objects as go
 
 # Import helper modules
 from propulsion_physics import (
