@@ -81,7 +81,7 @@ st.write(maintenance_message)
 
 # Performance Metrics
 res = resistance_increase(roughness, vessel_speed)
-power_kw = power_required(res, vessel_speed) / 1000
+power_kw = power_required(res, vessel_speed)
 speed_loss = speed_loss_due_to_fouling(roughness, vessel_speed)
 fuel_tph = fuel_consumption_tph(power_kw)
 
@@ -115,7 +115,7 @@ speed_df = speed_df.dropna()
 # Fuel Consumption vs Hull Fouling Chart
 fouling_range = np.linspace(0.01, 0.2, 50)
 fuel_values = [
-    fuel_consumption_tph(power_required(resistance_increase(r, vessel_speed), vessel_speed) / 1000)
+    fuel_consumption_tph(power_required(resistance_increase(r, vessel_speed), vessel_speed))
     for r in fouling_range
 ]
 
