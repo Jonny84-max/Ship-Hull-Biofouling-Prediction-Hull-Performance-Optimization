@@ -10,7 +10,7 @@ def speed_loss_due_to_fouling(roughness, vessel_speed):
     # Prevent negative speed
     if loss_percent >= 100:
         loss_percent = 99
-    return vessel_speed_kn * (1 - loss_percent / 100)
+    return vessel_speed * (1 - loss_percent / 100)
 
 # Import helper modules
 from propulsion_physics import (
