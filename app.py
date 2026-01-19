@@ -88,55 +88,29 @@ st.write(f"Power Required (kW): {power_kw:.2f}")
 st.write(f"Speed after Fouling (kn): {speed_loss:.2f}")
 st.write(f"Fuel Consumption (kg/hr): {fuel:.2f}")
 
-# -----------------------------
-# Speed Loss vs Hull Fouling
-# -----------------------------
+# Plot chart
+st.subheader("📉 Vessel Speed Loss vs Hull Fouling")
 roughness_range = np.linspace(0.01, 0.2, 30)
-
-speed_values = [
+speed_after_fouling = [
     speed_loss_due_to_fouling(r, vessel_speed) for r in roughness_range
 ]
-
 speed_df = pd.DataFrame({
     "Hull Roughness (mm)": roughness_range,
-    "Effective Speed (kn)": speed_values
+    "Speed After Fouling (kn)": speed_after_fouling
 })
-
-# Debug: check if values are valid
-st.write(speed_df.head())
-st.write(speed_df.dtypes)
+speed_chart = alt.Chart(speed_df).mark_line(point=True).encode(
+    x=alt.X("Hull Roughness (mm)", title="Hull Roughness (mm)"),
+    y=alt.Y("Speed After Fouling (kn)", title="Speed (kn)")
+).properties(
+    height=400
+)
+st.altair_chart(speed_chart, use_container_width=True)
 
 # Ensure numeric values
 speed_df["Effective Speed (kn)"] = pd.to_numeric(speed_df["Effective Speed (kn)"], errors="coerce")
 
 # Remove any invalid rows
 speed_df = speed_df.dropna()
-
-st.write(speed_df.head())
-st.write(speed_df.dtypes)
-st.write(speed_df.isnull().sum())
-
-# Plot chart
-
-# -----------------------------
-# Speed loss vs Hull Fouling
-# -----------------------------
-roughness_range = np.linspace(0.01, 0.2, 30)
-speed_values = [
-    speed_loss_due_to_fouling(r, vessel_speed) for r in roughness_range
-]
-speed_df = pd.DataFrame({
-    "Hull Roughness (mm)": roughness_range,
-    "Speed After Fouling (kn)": speed_values
-})
-st.write(speed_df.head())  # <--- debug check
-speed_chart = alt.Chart(speed_df).mark_line().encode(
-    x=alt.X("Hull Roughness (mm)", type="quantitative"),
-    y=alt.Y("Speed After Fouling (kn)", type="quantitative")
-).properties(
-    title="📉 Vessel Speed Loss vs Hull Fouling"
-)
-st.altair_chart(speed_chart, use_container_width=True)
 
 # Fuel Consumption vs Hull Fouling Chart
 fouling_range = np.linspace(0.01, 0.2, 50)
