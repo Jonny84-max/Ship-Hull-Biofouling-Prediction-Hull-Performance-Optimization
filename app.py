@@ -31,7 +31,7 @@ and provides **maintenance and safety recommendations**.
 # Inputs
 vessel_speed = st.slider("Vessel Speed (kn)", 6, 20, 12)
 idle_days = st.number_input("Idle Days", 2, 25, 10)
-temp = st.slider("Sea Temperature (°C)", 19.9, 35, 28)
+temp = st.slider("Sea Temperature (°C)", 19, 35, 28)
 salinity = st.slider("Salinity (ppt)", 30, 40, 35)
 days_since_clean = st.number_input("Days Since Last Cleaning", 0, 80, 60)
 roughness = st.slider("Hull Roughness (mm)", 0.01, 0.221, 0.05)
