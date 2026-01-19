@@ -29,17 +29,17 @@ and provides **maintenance and safety recommendations**.
 """)
 
 # Inputs
-vessel_speed = st.slider("Vessel Speed (kn)", 5, 25, 12)
-idle_days = st.number_input("Idle Days", 0, 60, 10)
-temp = st.slider("Sea Temperature (°C)", 20, 35, 28)
+vessel_speed = st.slider("Vessel Speed (kn)", 6, 20, 12)
+idle_days = st.number_input("Idle Days", 2, 25, 10)
+temp = st.slider("Sea Temperature (°C)", 19.9, 35, 28)
 salinity = st.slider("Salinity (ppt)", 30, 40, 35)
-days_since_clean = st.number_input("Days Since Last Cleaning", 0, 365, 60)
-roughness = st.slider("Hull Roughness (mm)", 0.01, 0.4, 0.05)
+days_since_clean = st.number_input("Days Since Last Cleaning", 0, 80, 60)
+roughness = st.slider("Hull Roughness (mm)", 0.01, 0.221, 0.05)
 # REMOVE friction slider OR keep it but override it
-# friction = st.slider("Friction Coefficient", 0.001, 0.3, 0.02)
+# friction = st.slider("Friction Coefficient", 0.00113, 0.00437, 0.002)
 # Automatically calculate friction based on roughness
 friction = 0.002 + roughness * 0.02
-fuel_penalty = st.slider("Fuel Penalty (%)", 0, 30, 5)
+fuel_penalty = st.slider("Fuel Penalty (%)", 2, 27, 5)
 
 # Prediction
 input_data = pd.DataFrame({
