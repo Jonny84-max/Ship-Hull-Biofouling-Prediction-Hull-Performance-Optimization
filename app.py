@@ -88,13 +88,15 @@ st.write(maintenance_message)
 res = resistance_increase(roughness, vessel_speed)
 power_kw = power_required(res, vessel_speed) / 1000
 speed_loss = speed_loss_due_to_fouling(roughness, vessel_speed)
-fuel = fuel_consumption(power_kw)
+fuel_lph = fuel_consumption_lph(power_kw)
+fuel_tph = fuel_consumption_tph(power_kw)
 
 st.subheader("📈 Hull Performance Metrics")
 st.write(f"Resistance (N): {res:.2f}")
 st.write(f"Power Required (kW): {power_kw:.2f}")
 st.write(f"Speed after Fouling (kn): {speed_loss:.2f}")
-st.write(f"Fuel Consumption (kg/hr): {fuel:.2f}")
+st.write(f"Fuel Consumption (L/hr): {fuel_lph:.2f}")
+st.write(f"Fuel Consumption (t/hr): {fuel_tph:.4f}")
 
 # Plot chart
 st.subheader("📉 Vessel Speed Loss vs Hull Fouling")
@@ -119,17 +121,21 @@ speed_df = speed_df.dropna()
 
 # Fuel Consumption vs Hull Fouling Chart
 fouling_range = np.linspace(0.01, 0.2, 50)
-fuel_values = [fuel_curve(vessel_speed, r) for r in fouling_range]
+fuel_values = [
+    fuel_consumption_lph(power_required(resistance_increase(r, vessel_speed), vessel_speed) / 1000)
+    for r in fouling_range
+]
 
 df_fuel = pd.DataFrame({
     "Hull Roughness (mm)": fouling_range,
-    "Fuel Consumption (kg/hr)": fuel_values
+    "Fuel Consumption (L/hr)": fuel_values
 })
 
-fuel_chart = alt.Chart(df_fuel).mark_line().encode(
-    x="Hull Roughness (mm)",
-    y=alt.Y("Fuel Consumption (kg/hr)", scale=alt.Scale(domain=[0, 0.5]))
+fuel_chart = alt.Chart(df_fuel).mark_line(point=True).encode(
+    x=alt.X("Hull Roughness (mm)", title="Hull Roughness (mm)"),
+    y=alt.Y("Fuel Consumption (L/hr)", title="Fuel Consumption (L/hr)")
 ).properties(
+    height=400,
     title="📊 Fuel Consumption vs Hull Fouling"
 )
 
