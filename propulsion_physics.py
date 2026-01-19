@@ -18,6 +18,6 @@ def fuel_consumption(power_kw):
     return power_kw * 0.2
 
 def fuel_curve(vessel_speed, roughness):
-    res = resistance_increase(roughness, speed_kn)
+    res = resistance_increase(roughness, vessel_speed)
     power_kw = power_required(res, vessel_speed) / 1000
     return fuel_consumption(power_kw)
