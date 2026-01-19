@@ -4,6 +4,7 @@ import joblib
 import numpy as np
 import altair as alt
 import matplotlib.pyplot as plt
+import plotly
 
 # Import helper modules
 from propulsion_physics import (
@@ -16,6 +17,7 @@ from propulsion_physics import (
 
 from safety_rules import check_operational_safety
 from maintenance_schedule import maintenance_action
+from hull3d import hull_3d_figure
 
 # Load the model
 model = joblib.load("biofouling_model.pkl")
@@ -133,3 +135,7 @@ fuel_chart = alt.Chart(df_fuel).mark_line(point=True).encode(
 )
 
 st.altair_chart(fuel_chart, use_container_width=True)
+
+st.subheader("🧭 3D Ship Hull Visualization")
+# Display the 3D plotly figure from hull3d.py
+st.plotly_chart(hull_3d_figure(), use_container_width=True)
