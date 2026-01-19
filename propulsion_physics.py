@@ -18,17 +18,17 @@ def speed_loss_due_to_fouling(roughness, vessel_speed):
     loss_percent = min(loss_percent, 90)    
     return vessel_speed * (1 - loss_percent / 100)
 
-# Fuel consumption (L/hr)
-def fuel_consumption_lph(power_kw, sfc=210, fuel_density=850):
+# Fuel consumption (t/hr)
+def fuel_consumption_tph(power_kw, sfc=210, fuel_density=850):
     # power_kw: engine power in kW
     # sfc: specific fuel consumption (g/kWh)
     # fuel_density: kg/m3 (Marine Diesel Oil)
-    fuel_kg_per_hr = (power_kw * sfc) / 1000
-    fuel_lph = (fuel_kg_per_hr / fuel_density) * 1000
-    return fuel_lph
+    fuel_kg_per_hr = (power_kw * sfc) * 1000
+    fuel_tph = (fuel_kg_per_hr / fuel_density) / 1000
+    return fuel_tph
 
 # Fuel curve vs fouling
 def fuel_curve(vessel_speed, roughness):
     res = resistance_increase(roughness, vessel_speed)
     power_kw = power_required(res, vessel_speed) / 1000
-    return fuel_consumption_lph(power_kw)
+    return fuel_consumption_tph(power_kw)
