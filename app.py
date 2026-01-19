@@ -104,6 +104,7 @@ speed_after_fouling = [
 speed_df = pd.DataFrame({
     "Hull Roughness (mm)": roughness_range,
     "Speed After Fouling (kn)": speed_after_fouling
+    "Effective Speed (kn)": speed_values
 })
 speed_chart = alt.Chart(speed_df).mark_line(point=True).encode(
     x=alt.X("Hull Roughness (mm)", title="Hull Roughness (mm)"),
