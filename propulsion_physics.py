@@ -30,5 +30,5 @@ def fuel_consumption_tph(power_kw, sfc=210, fuel_density=850):
 # Fuel curve vs fouling
 def fuel_curve(vessel_speed, roughness):
     res = resistance_increase(roughness, vessel_speed)
-    power_kw = power_required(res, vessel_speed)
+    power_kw = power_required(res, vessel_speed) / 1000
     return fuel_consumption_tph(power_kw)
