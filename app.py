@@ -18,8 +18,11 @@ from propulsion_physics import (
     resistance_increase,
     power_required,
     speed_loss_due_to_fouling,
-    fuel_consumption
+    fuel_consumption,
+
 )
+from propulsion_physics import fuel_consumption_tph
+
 
 from safety_rules import check_operational_safety
 from maintenance_schedule import maintenance_action
