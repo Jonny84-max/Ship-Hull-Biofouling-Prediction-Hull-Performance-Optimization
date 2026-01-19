@@ -11,8 +11,7 @@ from propulsion_physics import (
     resistance_increase,
     power_required,
     speed_loss_due_to_fouling,
-    fuel_consumption_lph,
-    fuel_consumption_tph
+    fuel_consumption_lph
 )
 
 from safety_rules import check_operational_safety
@@ -82,14 +81,12 @@ res = resistance_increase(roughness, vessel_speed)
 power_kw = power_required(res, vessel_speed) / 1000
 speed_loss = speed_loss_due_to_fouling(roughness, vessel_speed)
 fuel_lph = fuel_consumption_lph(power_kw)
-fuel_tph = fuel_consumption_tph(power_kw)
 
 st.subheader("📈 Hull Performance Metrics")
 st.write(f"Resistance (N): {res:.2f}")
 st.write(f"Power Required (kW): {power_kw:.2f}")
 st.write(f"Speed after Fouling (kn): {speed_loss:.2f}")
 st.write(f"Fuel Consumption (L/hr): {fuel_lph:.2f}")
-st.write(f"Fuel Consumption (t/hr): {fuel_tph:.4f}")
 
 # Plot chart
 st.subheader("📉 Vessel Speed Loss vs Hull Fouling")
