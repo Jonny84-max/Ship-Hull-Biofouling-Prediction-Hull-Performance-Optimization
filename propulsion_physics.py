@@ -23,8 +23,8 @@ def fuel_consumption_tph(power_kw, sfc=210, fuel_density=850):
     # power_kw: engine power in kW
     # sfc: specific fuel consumption (g/kWh)
     # fuel_density: kg/m3 (Marine Diesel Oil)
-    fuel_kg_per_hr = (power_kw * sfc)  # g/kWh -> kg/hr
-    fuel_tph = fuel_kg_per_hr          # kg/hr -> ton/hr
+    fuel_kg_per_hr = (power_kw * sfc) / 10 # g/kWh -> kg/hr
+    fuel_tph = fuel_kg_per_hr / 10         # kg/hr -> ton/hr
     return fuel_tph
 
 # Fuel curve vs fouling
