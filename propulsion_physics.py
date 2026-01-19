@@ -11,11 +11,11 @@ def power_required(resistance, vessel_speed):
     speed_m_s = vessel_speed * 0.51444
     return resistance * speed_m_s  # Watts (scaled)
 
-# Speed loss due to fouling
 def speed_loss_due_to_fouling(roughness, vessel_speed):
     Simple empirical fouling speed-loss model
+    # Prevent negative speed
     loss_percent = roughness * 50
-    loss_percent = min(loss_percent, 90)
+    loss_percent = min(loss_percent, 90)    
     return vessel_speed * (1 - loss_percent / 100)
 
 # Fuel consumption (L/hr)
