@@ -34,8 +34,11 @@ idle_days = st.number_input("Idle Days", 0, 60, 10)
 temp = st.slider("Sea Temperature (°C)", 20, 35, 28)
 salinity = st.slider("Salinity (ppt)", 30, 40, 35)
 days_since_clean = st.number_input("Days Since Last Cleaning", 0, 365, 60)
-roughness = st.slider("Hull Roughness (mm)", 0.01, 0.2, 0.05)
-friction = st.slider("Friction Coefficient", 0.001, 0.01, 0.002)
+roughness = st.slider("Hull Roughness (mm)", 0.01, 0.4, 0.05)
+# REMOVE friction slider OR keep it but override it
+# friction = st.slider("Friction Coefficient", 0.001, 0.3, 0.02)
+# Automatically calculate friction based on roughness
+friction = 0.002 + roughness * 0.02
 fuel_penalty = st.slider("Fuel Penalty (%)", 0, 30, 5)
 
 # Prediction
@@ -123,7 +126,7 @@ df_fuel = pd.DataFrame({
 
 fuel_chart = alt.Chart(df_fuel).mark_line(point=True).encode(
     x=alt.X("Hull Roughness (mm)", title="Hull Roughness (mm)"),
-    y=alt.Y("Fuel Consumption (L/hr)", title="Fuel Consumption (L/hr)")
+    y=alt.Y("Fuel Consumption (L/hr) * 1000", title="Fuel Consumption (L/hr) * 1000")
 ).properties(
     height=400,
     title="📊 Fuel Consumption vs Hull Fouling"
