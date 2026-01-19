@@ -1,21 +1,23 @@
-def resistance_increase(roughness, speed_kn):
+def resistance_increase(roughness, vessel_speed):
     # Simple resistance formula (example)
-    return (1 + roughness * 10) * (speed_kn ** 2)
+    return (1 + roughness * 10) * ( vessel_speed ** 2)
 
-def power_required(resistance, speed_kn):    
-    speed_m_s = speed_kn * 0.51444
+def power_required(resistance, vessel_speed):    
+    speed_m_s = vessel_speed * 0.51444
     return resistance * speed_m_s
 
-def speed_loss_due_to_fouling(roughness, speed_kn):
-    # Speed loss increases with roughness
+def speed_loss_due_to_fouling(roughness, vessel_speed):
     loss_percent = roughness * 50
-    return speed_kn * (1 - loss_percent / 100)
+    # Prevent negative speed
+    if loss_percent >= 100:
+        loss_percent = 99
+    return vessel_speed_kn * (1 - loss_percent / 100)
 
 def fuel_consumption(power_kw):
     # Simple fuel burn model (example)
     return power_kw * 0.2
 
-def fuel_curve(speed_kn, roughness):
+def fuel_curve(vessel_speed, roughness):
     res = resistance_increase(roughness, speed_kn)
-    power_kw = power_required(res, speed_kn) / 1000
+    power_kw = power_required(res, vessel_speed) / 1000
     return fuel_consumption(power_kw)
