@@ -12,7 +12,7 @@ from propulsion_physics import (
     power_required,
     speed_loss_due_to_fouling,
     fuel_consumption_lph,
-    fuel_consumption_tph,
+    fuel_consumption_tph
 )
 
 from safety_rules import check_operational_safety
