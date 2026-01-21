@@ -36,7 +36,7 @@ vessel_speed = st.slider("Vessel Speed (kn)", 6, 20, 12)
 idle_days = st.number_input("Idle Days", 2, 25, 10)
 temp = st.slider("Sea Temperature (°C)", 19, 35, 28)
 salinity = st.slider("Salinity (ppt)", 30, 40, 35)
-days_since_clean = st.number_input("Days Since Last Cleaning", 0, 80, 60)
+days_since_clean = st.number_input("Days Since Last Cleaning", 0, 365, 60)
 roughness = st.slider("Hull Roughness (mm)", 0.01, 0.221, 0.05)
 # REMOVE friction slider OR keep it but override it
 # friction = st.slider("Friction Coefficient", 0.00113, 0.00437, 0.002)
