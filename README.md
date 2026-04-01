@@ -29,7 +29,7 @@ Here’s an example of the hull fouling prediction visualization:
 ## How to Run Locally
 1. Clone the repo:
    ```bash
-   gh repo clone Jonny84-max/Ship-Hull-Biofouling-Prediction-Hull-Performance-Optimization
+   git clone https://github.com/Jonny84-max/Ship-Hull-Biofouling-Prediction-Hull-Performance-Optimization.git
 
 ## FIne in the project folder
    ```bash
